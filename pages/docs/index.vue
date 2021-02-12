@@ -6,11 +6,14 @@
       </div>
       <div>
         <blockquote>https://api.jsonhut.com/</blockquote>
+        <div>All requests support <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing" target="_blank">cross-origin
+          resource sharing(CORS)</a> and SSL.
+        </div>
       </div>
     </div>
     <div>
       <div class="title">
-        Request JSON
+        *Request JSON
       </div>
       <div>
         <pre class="md-fences"> GET /bins/:id </pre>
@@ -20,17 +23,18 @@
     </div>
     <div>
       <div class="title">
-        Create a new JSON
+        *Create a new JSON
       </div>
       <div>
         <pre class="md-fences"> POST /bins </pre>
 
         <p>POST Body</p>
 
-        <pre v-highlightjs><code class="js"> {
+        <pre v-highlightjs class="md-fences"><code class="js"> {
     "json": "your json",
     "day": 3
    }</code></pre>
+        <p>Params</p>
 
         <p>Server response</p>
         <code class="code-line">201 Created </code>
@@ -38,12 +42,32 @@
     </div>
     <div>
       <div class="title">
-        Get JSON details
+        *Get JSON details
       </div>
       <div>
         <pre class="md-fences"> GET /details/:id </pre>
         <p>Server response</p>
         <code class="code-line">200 OK </code>
+        <pre v-highlightjs class="md-fences"><code class="js"> //for example
+   {
+    "code": 200,
+    "msg": "Success",
+    "data": {
+        "url": "https://api.jsonhut.com/bins/2G2DZX",
+        "count": 16,
+        "created_at": "2021-02-09 22:36:29",
+        "last_used_at": "2021-02-10 21:38:44",
+        "expires_at": "2021-02-12 22:36:29"
+     }
+   }</code></pre>
+        <p>Glossary</p>
+        <ul>
+          <li><strong>url:</strong> The url to request JSON</li>
+          <li><strong>count:</strong> Number of calls</li>
+          <li><strong>created_at:</strong> The JSON created at this time</li>
+          <li><strong>last_used_at:</strong> The JSON Last used at this time</li>
+          <li><strong>expires_at:</strong> The JSON will expire after this time</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -52,7 +76,7 @@
 <script>
 export default {
   name: 'Index',
-  data () {
+  data() {
     return {
       code: '{"json": "your json","day": 3}'
     }
@@ -103,7 +127,7 @@ blockquote {
   padding: 8px 4px 8px 4px !important;
   margin-top: 15px;
   margin-bottom: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);*/
   color: #dee2e6;
 }
 
