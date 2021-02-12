@@ -7,16 +7,22 @@
       <div>
         A simple JSON store for your web or mobile app
         <span v-if="$route.path !== '/' && $route.path !== '/docs' && $route.path !== '/common'" class="creat">
-          <nuxt-link to="/" style="float: right">+ create new JSON</nuxt-link>
+          <nuxt-link style="float: right" to="/">+ create new JSON</nuxt-link>
         </span>
       </div>
     </div>
     <Nuxt />
     <div id="footer">
       <div>
-        <nuxt-link to="/">Home</nuxt-link>
-        <nuxt-link to="/docs">Docs</nuxt-link>
-        <nuxt-link to="/common">Common</nuxt-link>
+        <nuxt-link to="/">
+          Home
+        </nuxt-link>
+        <nuxt-link to="/docs">
+          Docs
+        </nuxt-link>
+        <nuxt-link to="/common">
+          Common
+        </nuxt-link>
       </div>
       JsonHut ©2021 Created by North
     </div>
@@ -26,7 +32,7 @@
 <style>
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
+  Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -85,6 +91,7 @@ html {
 
 #footer {
   margin-top: 104px;
+  margin-bottom: 80px;
   color: #adb5bd;
   text-align: center;
 }
