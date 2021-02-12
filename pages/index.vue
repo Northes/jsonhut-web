@@ -1,13 +1,9 @@
 <template>
-  <div id="section">
+  <div>
     <div>
       <!--        <a-textarea v-model="jsonBody" :disabled="showLink" :rows="8" placeholder="Enter your valid JSON data here"/>-->
-      <div style="background-color: #1f2430;height: 300px">
-        <codemirror
-          v-model="jsonBody"
-          :options="cmOption"
-          class="codemirror"
-        />
+      <div style="background-color: #1f2430; height: 300px;border-radius: 6px;">
+        <codemirror v-model="jsonBody" :options="cmOption" class="codemirror" />
       </div>
     </div>
 
@@ -27,17 +23,22 @@
         <a-select-option value="7">
           Seven days
         </a-select-option>
-        <a-select-option disabled value="0">
+        <a-select-option value="0">
           Permanent
         </a-select-option>
       </a-select>
-      <a-button size="large" type="primary" @click="handleSave" style="width: 100px">
+      <a-button
+        size="large"
+        type="primary"
+        style="width: 100px"
+        @click="handleSave"
+      >
         Save
       </a-button>
-      <a-button size="large" @click="handleFormatting">
+      <a-button size="large" @click="jsonBody = handleFormatting(jsonBody)">
         Formatting
       </a-button>
-      <a-button size="large" @click="handleCompress">
+      <a-button size="large" @click="jsonBody = handleCompress(jsonBody)">
         Compress
       </a-button>
     </div>
@@ -49,8 +50,8 @@ export default {
   data () {
     return {
       jsonBody: '',
-      expirationTime: '3',
-      jsonLink: 'https://jsonhut.com/api/SOsNDsu',
+      expireTime: '3',
+      jsonLink: 'https://api.jsonhut.com/bins/SOsNDsu',
       cmOption: {
         tabSize: 4,
         styleActiveLine: true, // 高亮选中行
@@ -68,9 +69,9 @@ export default {
   },
   methods: {
     handleChange (value) {
-      this.expirationTime = value
+      this.expireTime = value
       // eslint-disable-next-line no-console
-      console.log(this.expirationTime)
+      console.log(this.expireTime)
     },
     handleSave () {
       if (this.isJsonBodyEmptyOrErrorFormat()) {
@@ -78,38 +79,41 @@ export default {
       }
       const vm = this
       const data = {
-        time: this.expirationTime,
-        json: this.jsonBody
+        day: this.expireTime,
+        json: this.handleCompress(this.jsonBody)
       }
-      this.$axios.post('/api', data).then((res) => {
-        console.log(res.data)
-        if (res.data.code === 200) {
-          vm.$router.push(res.data.data.id)
-        }
-      })
+      this.$axios
+        .post('/bins', data)
+        .then((res) => {
+          // console.log(res.data);
+          if (res.data.code === 201) {
+            vm.$router.push('/details/' + res.data.data.id)
+          }
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.log(err)
+          vm.$message.warning('Something was error!')
+        })
     },
-    handleFormatting () {
+    handleFormatting (str) {
       if (this.isJsonBodyEmptyOrErrorFormat()) {
         return false
       }
-      this.jsonBody = JSON.stringify(JSON.parse(this.jsonBody), null, 2)
+      return JSON.stringify(JSON.parse(str), null, 2)
     },
-    handleCompress () {
+    handleCompress (str) {
       if (this.isJsonBodyEmptyOrErrorFormat()) {
         return false
       }
-      this.jsonBody = JSON.stringify(JSON.parse(this.jsonBody))
+      return JSON.stringify(JSON.parse(str))
     },
     isJsonFormat (jsonContent) {
       if (typeof jsonContent === 'string') {
         try {
           // eslint-disable-next-line no-unused-vars
           const obj = JSON.parse(jsonContent)
-          if (jsonContent.includes('{')) {
-            return true
-          } else {
-            return false
-          }
+          return jsonContent.includes('{');
         } catch (e) {
           // eslint-disable-next-line no-console
           console.log(e)
@@ -134,11 +138,8 @@ export default {
 </script>
 
 <style>
-/*#section {*/
-/*  margin-top: 8px;*/
-/*}*/
-
 .button-group {
   margin-top: 24px;
 }
+
 </style>
