@@ -37,11 +37,10 @@
 </template>
 
 <script>
-const axios = require('axios')
 export default {
   async asyncData(ctx) {
     try {
-      const baseUrl = "http://127.0.0.1:8080"
+      const baseUrl = ctx.env.baseUrl
       let [jsonBody, details] = await Promise.all([
         ctx.$axios.get(baseUrl + '/bins/' + ctx.params.id, {params: {from: 'details'}}).catch((err) => {
           throw new Error(err.response.data.code)
