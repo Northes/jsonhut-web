@@ -8,16 +8,16 @@
       <!--id:{{ $route.params.id }}-->
       <p>URl to access this JSON directly.</p>
       <a-input
-        v-model="jsonLinkShow"
-        placeholder="Ohh! You caught me! 👻"
-        style="width: 260px"
-        @change="changeTheLinkBox"
+          v-model="jsonLinkShow"
+          placeholder="Ohh! You caught me! 👻"
+          style="width: 290px"
+          @change="changeTheLinkBox"
       />
       <a-button
-        v-clipboard:copy="jsonLink"
-        v-clipboard:error="copyError"
-        v-clipboard:success="copySuccess"
-        type="dashed"
+          v-clipboard:copy="jsonLink"
+          v-clipboard:error="copyError"
+          v-clipboard:success="copySuccess"
+          type="dashed"
       >
         Copy
       </a-button>
@@ -39,36 +39,31 @@
 <script>
 const axios = require('axios')
 export default {
-  asyncData ({ params }) {
-    const baseURl = 'http://127.0.0.1:8080'
-    // console.log(params);
-    return axios
-      .all([
-        axios.get(baseURl + '/bins/' + params.id, {
-          params: { from: 'details' }
+  async asyncData(ctx) {
+    try {
+      const baseUrl = "http://127.0.0.1:8080"
+      let [jsonBody, details] = await Promise.all([
+        ctx.$axios.get(baseUrl + '/bins/' + ctx.params.id, {params: {from: 'details'}}).catch((err) => {
+          throw new Error(err.response.data.code)
         }),
-        axios.get(baseURl + '/details/' + params.id)
+        ctx.$axios.get(baseUrl + '/details/' + ctx.params.id).catch((err) => {
+          throw new Error(err.response.data.code)
+        })
       ])
-      .then((res) => {
-        let res1, res2;
-        // eslint-disable-next-line prefer-const
-        [res1, res2] = res
-        const jsonbody = JSON.stringify(
-          JSON.parse(JSON.stringify(res1.data)),
-          null,
-          2
-        )
-        return {
-          jsonBody: jsonbody,
-          details: res2.data.data
-        }
-      })
-      .catch((err) => {
-        console.log(err.response.data)
-        return { errCode: err.response.data.code }
-      })
+      return {
+        jsonBody: JSON.stringify(JSON.parse(JSON.stringify(jsonBody.data)), null, 2),
+        details: details.data.data
+      }
+    } catch (error) {
+      console.log("errConsole========:", error.toString())
+      if (error.toString() === 'Error: 404') {
+        ctx.error({statusCode: 404, message: 'Can not find the JSON'})
+      } else {
+        ctx.error({statusCode: 500, message: 'Server error'})
+      }
+    }
   },
-  data () {
+  data() {
     return {
       jsonBody: '',
       jsonLink: '',
@@ -96,23 +91,23 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     this.jsonLinkShow = this.jsonLink = this.details.url
   },
   methods: {
-    copySuccess () {
+    copySuccess() {
       this.$message.success('Copy Success!')
     },
-    copyError () {
+    copyError() {
       this.$message.warning('Ohh!You have to copy it yourself!')
     },
-    changeTheLinkBox () {
+    changeTheLinkBox() {
       const vm = this
       setTimeout(function () {
         vm.jsonLinkShow = vm.jsonLink
       }, 2300)
     },
-    refreshDetails () {
+    refreshDetails() {
       const vm = this
       this.$axios.get('/details/' + this.$route.params.id).then((res) => {
         // console.log(res.data)
