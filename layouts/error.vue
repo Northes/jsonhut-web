@@ -1,12 +1,13 @@
 <template>
   <div>
-    <h2>{{ error.statusCode === 404 ? 404 : 500 }}</h2>
+    <h2>{{ error.statusCode }}</h2>
+    <p>{{ error.message }}</p>
     <div>
-      <nuxt-link v-if="$route.path === '/'" to="/" @click="handleReload">
-        <span @click="handleReload">Back to home.</span>
+      <nuxt-link v-if="$route.name === 'index'" to="/" @click="handleReload">
+        <span @click="handleReload">Back to home. 👈</span>
       </nuxt-link>
       <nuxt-link v-else to="/">
-        Back to home.
+        Back to home. 👈
       </nuxt-link>
     </div>
   </div>
@@ -17,7 +18,7 @@ export default {
   name: 'Error',
   props: ['error'],
   methods: {
-    handleReload () {
+    handleReload() {
       location.reload()
     }
   }
