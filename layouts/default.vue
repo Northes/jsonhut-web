@@ -11,7 +11,7 @@
         </span>
       </div>
     </div>
-    <Nuxt />
+    <Nuxt/>
     <div id="footer">
       <div>
         <nuxt-link to="/">
@@ -24,7 +24,7 @@
           Common
         </nuxt-link>
       </div>
-      JsonHut ©2021 Created by North
+      <div>JsonHut ©2021 Created by North</div>
     </div>
   </div>
 </template>
@@ -62,7 +62,7 @@ html {
 
 #footer {
   margin-top: 104px;
-  margin-bottom: 80px;
+  padding-bottom: 80px;
   color: #adb5bd;
   text-align: center;
 }
