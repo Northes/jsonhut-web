@@ -75,7 +75,7 @@
 
 <script>
 export default {
-  name: 'Index',
+  name: 'docs',
   data() {
     return {
       code: '{"json": "your json","day": 3}'
