@@ -24,7 +24,7 @@
           Common
         </nuxt-link>
       </div>
-      <div>JsonHut ©2021 Created by North</div>
+      <div>JsonHut ©2021 Created by North. Powered by <a href="https://vercel.com" target="_blank" style="color: #343a40">Vercel</a> </div>
     </div>
   </div>
 </template>
