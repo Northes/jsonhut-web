@@ -66,6 +66,7 @@ export default {
     buildModules: [
         // https://go.nuxtjs.dev/eslint
         // '@nuxtjs/eslint-module'
+        '@nuxtjs/google-analytics'
     ],
 
     // Modules: https://go.nuxtjs.dev/config-modules
@@ -78,6 +79,10 @@ export default {
     axios: {
         // baseURL: 'https://api.jsonhut.com' // Used as fallback if no runtime config is provided
         baseURL: process.env.NODE_ENV === "development" ?"http://localhost:8080": "https://api.jsonhut.com"
+    },
+
+    googleAnalytics: {
+        id: 'UA-182409082-1'
     },
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
