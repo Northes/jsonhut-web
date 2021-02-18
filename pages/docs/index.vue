@@ -32,7 +32,7 @@
 
         <pre v-highlightjs class="md-fences"><code class="js"> {
     "json": "your json",
-    "day": 3
+    "duration_days": 3
    }</code></pre>
         <p>Params</p>
 

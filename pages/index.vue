@@ -79,7 +79,7 @@ export default {
       }
       const vm = this
       const data = {
-        day: this.expireTime,
+        duration_days: this.expireTime,
         json: this.handleCompress(this.jsonBody)
       }
       this.$axios
