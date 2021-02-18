@@ -42,10 +42,10 @@ export default {
     try {
       const baseUrl = ctx.env.baseUrl
       let [jsonBody, details] = await Promise.all([
-        ctx.$axios.get(baseUrl + '/bins/' + ctx.params.id, {params: {from: 'details'}}).catch((err) => {
+        ctx.$axios.get(`${baseUrl}/bins/${ctx.params.id}`, {params: {from: 'details'}}).catch((err) => {
           throw new Error(err.response.data.code)
         }),
-        ctx.$axios.get(baseUrl + '/details/' + ctx.params.id).catch((err) => {
+        ctx.$axios.get(`${baseUrl}/details/${ctx.params.id}`).catch((err) => {
           throw new Error(err.response.data.code)
         })
       ])
@@ -54,12 +54,22 @@ export default {
         details: details.data.data
       }
     } catch (error) {
-      console.log("errConsole========:", error.toString())
-      if (error.toString() === 'Error: 404') {
-        ctx.error({statusCode: 404, message: 'Can not find the JSON'})
-      } else {
-        ctx.error({statusCode: 500, message: 'Server error'})
+      // console.log("errConsole========:\n", error.toString())
+      switch (error.toString()) {
+        case 'Error: 404':
+          ctx.error({statusCode: 404, message: 'Can not find the JSON'})
+          break;
+        case 'Error: 400':
+          ctx.error({statusCode: 400, message: 'The JSON is expired or disabled'})
+          break;
+        default:
+          ctx.error({statusCode: 500, message: 'Server error'})
       }
+      // if (error.toString() === 'Error: 404') {
+      //   ctx.error({statusCode: 404, message: 'Can not find the JSON'})
+      // } else {
+      //   ctx.error({statusCode: 500, message: 'Server error'})
+      // }
     }
   },
   data() {
