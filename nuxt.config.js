@@ -52,7 +52,8 @@ export default {
         {
             src: '~plugins/vue-codemirror',
             ssr: false
-        }
+        },
+        { src: '~plugins/baidu.js', ssr: false },
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
