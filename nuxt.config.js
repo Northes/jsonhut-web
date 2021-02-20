@@ -4,7 +4,7 @@ export default {
     // target: 'static',
 
     env: {
-        baseUrl: process.env.NODE_ENV === "development" ?"http://localhost:8080": "https://api.jsonhut.com"
+        baseUrl: process.env.NODE_ENV === "development" ? "http://localhost:8080" : "https://api.jsonhut.com"
     },
 
     // Global page headers: https://go.nuxtjs.dev/config-head
@@ -23,7 +23,11 @@ export default {
             {
                 hid: 'description',
                 name: 'description',
-                content: ''
+                content: 'A simple JSON store for your web or mobile app'
+            }, {
+                hid: 'keywords',
+                name: 'keywords',
+                content: 'jsonhut,temporary json warehouse,json store,临时json,json仓库,临时json仓库'
             }
         ],
         link: [{
@@ -53,7 +57,7 @@ export default {
             src: '~plugins/vue-codemirror',
             ssr: false
         },
-        { src: '~plugins/baidu.js', ssr: false },
+        {src: '~plugins/baidu.js', ssr: false},
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -79,7 +83,7 @@ export default {
     // Axios module configuration: https://go.nuxtjs.dev/config-axiosset
     axios: {
         // baseURL: 'https://api.jsonhut.com' // Used as fallback if no runtime config is provided
-        baseURL: process.env.NODE_ENV === "development" ?"http://localhost:8080": "https://api.jsonhut.com"
+        baseURL: process.env.NODE_ENV === "development" ? "http://localhost:8080" : "https://api.jsonhut.com"
     },
 
     googleAnalytics: {

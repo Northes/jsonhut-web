@@ -76,6 +76,19 @@
 <script>
 export default {
   name: 'docs',
+  head() {
+    return {
+      title: 'JsonHut Docs - A simple JSON store for your web or mobile app',
+      meta: [
+        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'JsonHut API documentation'
+        }
+      ]
+    }
+  },
   data() {
     return {
       code: '{"json": "your json","day": 3}'
