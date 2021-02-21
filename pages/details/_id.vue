@@ -7,20 +7,29 @@
       <p>Your JSON was saved.</p>
       <!--id:{{ $route.params.id }}-->
       <p>URl to access this JSON directly.</p>
-      <a-input
-          v-model="jsonLinkShow"
-          placeholder="Ohh! You caught me! 👻"
-          style="width: 290px"
-          @change="changeTheLinkBox"
-      />
-      <a-button
-          v-clipboard:copy="jsonLink"
-          v-clipboard:error="copyError"
-          v-clipboard:success="copySuccess"
-          type="dashed"
-      >
-        Copy
-      </a-button>
+
+      <a-row :gutter="16" type="flex">
+        <a-col :lg="{ span: 9}" :xs="{span: 18}">
+          <a-input
+              v-model="jsonLinkShow"
+              placeholder="Ohh! You caught me! 👻"
+              style="width: 100%"
+              @change="changeTheLinkBox"
+          />
+        </a-col>
+        <a-col :lg="{span:4}" :xs="{span:6}">
+          <a-button
+              v-clipboard:copy="jsonLink"
+              v-clipboard:error="copyError"
+              v-clipboard:success="copySuccess"
+              type="dashed"
+          >
+            Copy
+          </a-button>
+        </a-col>
+      </a-row>
+
+
     </div>
     <div class="details">
       <p>

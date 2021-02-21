@@ -3,51 +3,63 @@
     <div>
       <!--        <a-textarea v-model="jsonBody" :disabled="showLink" :rows="8" placeholder="Enter your valid JSON data here"/>-->
       <div style="background-color: #1f2430; height: 300px;border-radius: 6px;">
-        <codemirror v-model="jsonBody" :options="cmOption" class="codemirror" />
+        <codemirror v-model="jsonBody" :options="cmOption" class="codemirror"/>
       </div>
     </div>
 
     <div class="button-group">
-      <a-select
-        default-value="3"
-        size="large"
-        style="width: 120px"
-        @change="handleChange"
-      >
-        <a-select-option value="1">
-          One day
-        </a-select-option>
-        <a-select-option value="3">
-          Three days
-        </a-select-option>
-        <a-select-option value="7">
-          Seven days
-        </a-select-option>
-        <a-select-option value="0">
-          Permanent
-        </a-select-option>
-      </a-select>
-      <a-button
-        size="large"
-        type="primary"
-        style="width: 100px"
-        @click="handleSave"
-      >
-        Save
-      </a-button>
-      <a-button size="large" @click="jsonBody = handleFormatting(jsonBody)">
-        Formatting
-      </a-button>
-      <a-button size="large" @click="jsonBody = handleCompress(jsonBody)">
-        Compress
-      </a-button>
+      <a-row :gutter="16" type="flex">
+        <a-col :lg="{span:4,order:2}" :xs="{span:24}">
+          <a-button
+              size="large"
+              style="width: 100%"
+              type="primary"
+              @click="handleSave"
+          >
+            Save
+          </a-button>
+        </a-col>
+        <a-col :lg="{span:4,order:1}" :sm="{span:4}" :xs="{span:9}">
+          <a-select
+              default-value="3"
+              size="large"
+              style="width: 120px"
+              @change="handleChange"
+          >
+            <a-select-option value="1">
+              One day
+            </a-select-option>
+            <a-select-option value="3">
+              Three days
+            </a-select-option>
+            <a-select-option value="7">
+              Seven days
+            </a-select-option>
+            <a-select-option value="0">
+              Permanent
+            </a-select-option>
+          </a-select>
+        </a-col>
+        <a-col :lg="{span:3,order:3}" :sm="{span:4}" :xs="{span:7}">
+          <a-button size="large" style="width: 100%" @click="jsonBody = handleFormatting(jsonBody)">
+            Format
+          </a-button>
+        </a-col>
+        <a-col :lg="{span:3,order:4}" :sm="{span:4}" :xs="{span:7}">
+          <a-button size="large" @click="jsonBody = handleCompress(jsonBody)">
+            Compact
+          </a-button>
+        </a-col>
+      </a-row>
+
+
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       jsonBody: '',
       expireTime: '3',
@@ -68,12 +80,12 @@ export default {
     }
   },
   methods: {
-    handleChange (value) {
+    handleChange(value) {
       this.expireTime = value
       // eslint-disable-next-line no-console
       console.log(this.expireTime)
     },
-    handleSave () {
+    handleSave() {
       if (this.isJsonBodyEmptyOrErrorFormat()) {
         return false
       }
@@ -83,32 +95,32 @@ export default {
         json: this.handleCompress(this.jsonBody)
       }
       this.$axios
-        .post('/bins', data)
-        .then((res) => {
-          // console.log(res.data);
-          if (res.data.code === 201) {
-            vm.$router.push('/details/' + res.data.data.id)
-          }
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-console
-          console.log(err)
-          vm.$message.warning('Something was error!')
-        })
+          .post('/bins', data)
+          .then((res) => {
+            // console.log(res.data);
+            if (res.data.code === 201) {
+              vm.$router.push('/details/' + res.data.data.id)
+            }
+          })
+          .catch((err) => {
+            // eslint-disable-next-line no-console
+            console.log(err)
+            vm.$message.warning('Something was error!')
+          })
     },
-    handleFormatting (str) {
+    handleFormatting(str) {
       if (this.isJsonBodyEmptyOrErrorFormat()) {
         return false
       }
       return JSON.stringify(JSON.parse(str), null, 2)
     },
-    handleCompress (str) {
+    handleCompress(str) {
       if (this.isJsonBodyEmptyOrErrorFormat()) {
         return false
       }
       return JSON.stringify(JSON.parse(str))
     },
-    isJsonFormat (jsonContent) {
+    isJsonFormat(jsonContent) {
       if (typeof jsonContent === 'string') {
         try {
           // eslint-disable-next-line no-unused-vars
@@ -122,7 +134,7 @@ export default {
       }
       return false
     },
-    isJsonBodyEmptyOrErrorFormat () {
+    isJsonBodyEmptyOrErrorFormat() {
       if (this.jsonBody === '') {
         this.$message.warning('Input box is empty!')
         return true
