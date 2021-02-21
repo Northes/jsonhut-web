@@ -28,7 +28,7 @@
         <span style="float: right">
           <a @click="refreshDetails">Refresh</a></span>
       </p>
-      <p>Count: {{ details.count }}/{{maxRateLimit}}</p>
+      <p>Count: {{ details.count }}/{{ maxRateLimit }}</p>
       <p>CreatedAt: {{ details.created_at }}</p>
       <p>LastUsedAt: {{ details.last_used_at }}</p>
       <p>ExpiresAt: {{ details.expires_at }}</p>
@@ -49,8 +49,9 @@ export default {
           throw new Error(err.response.data.code)
         })
       ])
+      let maxRateLimit = jsonBody.headers['x-rate-limit-limit']
       return {
-        maxRateLimit: jsonBody.headers['x-rate-limit-limit'],
+        maxRateLimit: maxRateLimit === undefined ? '200' : maxRateLimit,
         jsonBody: JSON.stringify(JSON.parse(JSON.stringify(jsonBody.data)), null, 2),
         details: details.data.data
       }
