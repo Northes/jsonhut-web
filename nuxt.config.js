@@ -1,3 +1,5 @@
+import path from 'path';
+
 export default {
     // Target: https://go.nuxtjs.dev/config-target
     target: 'server',
@@ -40,18 +42,26 @@ export default {
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
         '~assets/css/main.css',
-        'ant-design-vue/dist/antd.css',
+        // 'ant-design-vue/dist/antd.css',
         'codemirror/lib/codemirror.css',
         'codemirror/theme/ayu-mirage.css',
-        'codemirror/theme/solarized.css',
+        // 'codemirror/theme/solarized.css',
         'codemirror/addon/scroll/simplescrollbars.css',
-        'codemirror/addon/hint/show-hint.css'
+        'codemirror/addon/hint/show-hint.css',
+        //    按需引入
+        // 'ant-design-vue/lib/icon/style/css',
+        'ant-design-vue/lib/button/style/css',
+        'ant-design-vue/lib/select/style/css',
+        'ant-design-vue/lib/message/style/css',
+        'ant-design-vue/lib/input/style/css',
+        'ant-design-vue/lib/row/style/css',
+        'ant-design-vue/lib/col/style/css',
     ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
         '@/plugins/antd-ui',
-        '@/plugins/vue-highlight',
+        // '@/plugins/vue-highlight',
         '@/plugins/vue-clipboard2',
         {
             src: '~plugins/vue-codemirror',
@@ -91,5 +101,23 @@ export default {
     },
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
-    build: {}
+
+    build: {
+        // analyze: true,
+        // assetFilter: function (assetFilename) {
+        //     return assetFilename.endsWith('.js');
+        // },
+
+        // optimization: {
+        //     splitChunks: {
+        //         minSize: 10000,
+        //         maxSize: 250000
+        //     }
+        // },
+
+        extend(config, ctx) {
+            config.resolve.alias['@ant-design/icons/lib/dist$'] = path.resolve(__dirname, './plugins/antd-icon.js') // 引入需要的
+            config.resolve.alias['@'] = path.resolve(__dirname, '../plugins')
+        }
+    }
 }
