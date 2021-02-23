@@ -68,13 +68,13 @@ export default {
       // console.log("errConsole========:\n", error.toString())
       switch (error.toString()) {
         case 'Error: 404':
-          ctx.error({statusCode: 404, message: 'Can not find the JSON'})
+          ctx.error({statusCode: 404, message: 'Can\'t find the JSON.'})
           break;
         case 'Error: 400':
-          ctx.error({statusCode: 400, message: 'The JSON is expired or disabled'})
+          ctx.error({statusCode: 400, message: 'The JSON is expired or disabled.'})
           break;
         default:
-          ctx.error({statusCode: 500, message: 'Server error'})
+          ctx.error({statusCode: 500, message: 'Server error.'})
       }
       // if (error.toString() === 'Error: 404') {
       //   ctx.error({statusCode: 404, message: 'Can not find the JSON'})

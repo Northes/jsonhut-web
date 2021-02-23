@@ -136,11 +136,11 @@ export default {
     },
     isJsonBodyEmptyOrErrorFormat() {
       if (this.jsonBody === '') {
-        this.$message.warning('Input box is empty!')
+        this.$message.warning('Editor is empty!')
         return true
       }
       if (!this.isJsonFormat(this.jsonBody)) {
-        this.$message.warning('Error format!!')
+        this.$message.warning('Format error!')
         return true
       }
       return false
